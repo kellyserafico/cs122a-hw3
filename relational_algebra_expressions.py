@@ -9,7 +9,16 @@ class Expressions():
 
     expression2 = Projection(NaturalJoin(Relation("university_affiliate"), NaturalJoin(Selection(Relation("non_student"), Equals("member_type", "Faculty")), Relation("person"))), ["name", "department"])
 
-    expression3 = Projection(NaturalJoin(Selection(Relation("space"), Equals("space_description", "weight room")), Selection(Relation("space"), Equals("space_description", "cardio room"))), "space_id")
+    # expression3 = Projection(NaturalJoin(Selection(Relation("space"), Equals("space_description", "weight room")), Selection(Relation("space"), Equals("space_description", "cardio room"))), "space_id")
+
+
+    # names of people who were at a location at 2023-04-01
+    #names of people who were at weight or cardio room at 2023-04-01
+    
+    #space ids of weight room and cardio room
+    poop = (Union(Selection(Relation("space"), Equals("space_description", "cardio room")), (Selection(Relation("space"), Equals("space_description", "weight room")))))
+    # expression3 = Projection(Selection(Relation('location_reading'), Equals("space_id", poop)), "person_id")
+    expression3 = Projection(NaturalJoin(Selection(NaturalJoin(poop, Relation("location_reading")), Equals("timestamp", "2023-04-01 00:00:00")), Relation("person")), "name")
 
     #expression4 = 
 
